@@ -1,0 +1,69 @@
+body{
+    background-color: #0e0e0e;
+    color: whitesmoke;
+    box-sizing:border-box;
+}
+a{
+    text-decoration: none;
+}
+#nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.vscode-icon{
+    width: 20px;
+    padding-right: 8px;
+}
+.visual-nav{
+    font-size: medium;
+    font-weight: 600;
+    color: whitesmoke;
+}
+
+.left-div{
+    padding-left: 150px;
+}
+.right-div{
+    padding-right: 150px;
+}
+.topLink{
+    padding: 10px;
+    color:gray ;
+    cursor: pointer;
+    font-size:medium;
+    font-weight: 200;
+    
+}
+.topLink:hover{
+    color: white;
+}
+.btn{
+    font-size: medium;
+    font-weight: 600;
+    background-color:#0078D4;
+    color:white;
+}
+.after-nav{
+    padding: 50px;
+    margin-left: 450px;
+}
+.hero-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    text-align: center;
+}
+.hero-big{
+    font-size: 72px;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+.hero-description{
+    margin-bottom: 32px;
+    font-size: 25px;
+    font-weight: 500;
+    color:#9ba3b4;
+    width: 500px;
+}
