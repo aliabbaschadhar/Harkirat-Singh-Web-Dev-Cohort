@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo using render function</title>
+</head>
+
+<body>
+    <input type="text"></input>
+    <button onclick="addTodo()">Add todo!</button>
+    <button onclick="deleteLastTodo()">Delete the last todo</button>
+    <button onclick="deleteFirstTodo()">Delete the first todo</button>
+    <div id="todo"></div>
+    <script>
+        //State
+        let counter = 1;
+        let todos = [{
+            id: 1,
+            title: "Go to gym",
+        },
+        ];
+
+
+        function addTodo() {
+            todos.push({
+                id: ++counter,
+                title: document.querySelector("input").value
+            })
+            document.querySelector("input").value = "";
+            render();
+        }
+
+        function deleteLastTodo() {
+            todos.pop()
+            render();
+        }
+        function deleteFirstTodo() {
+            todos.splice(0, 1);
+            render();
+        }
+        function deleteTodo(id) {
+            todos = todos.filter((todo) => todo.id !== id);
+            render();
+        }
+
+        function createTodoComponent(todo) {
+            const div = document.createElement("div");
+            const h1 = document.createElement("h1");
+            const button = document.createElement("button");
+
+            button.innerHTML = 'Delete';
+            button.setAttribute('onclick', `deleteTodo(${todo.id})`);
+            h1.textContent = todo.title;
+            div.setAttribute('data-id', todo.id);
+            div.appendChild(h1);
+            div.appendChild(button);
+            return div
+        }
+
+        //Changing the dom / webpage according to the changes happened in the state like adding or removing a todo etc..
+        function render() {
+            document.querySelector("#todo").innerHTML = "";
+            todos.forEach((todo) => {
+                const todoDiv = document.querySelector("#todo")
+                const ele = createTodoComponent(todo);
+                todoDiv.appendChild(ele);
+            })
+
+        }
+    </script>
+
+</body>
+
+</html>
