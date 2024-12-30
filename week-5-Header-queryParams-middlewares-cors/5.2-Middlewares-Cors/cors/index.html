@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.6/axios.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <input id="a" type="text" placeholder="First value" />
+        <input id="b" type="text" placeholder="Second value">
+        <button onclick="sendRequest()">Find sum</button>
+    </div>
+    <script>
+        async function sendRequest() {
+            const a = document.querySelector("#a").value;
+            const b = document.getElementById("b").value;
+            //Here i used post method bcz in index.js i only created http server for post route i handles only post method
+            axios.post("http://localhost:3000/sum/", {
+                a: a,
+                b: b,
+            });
+        }
+        sendRequest();
+    </script>
+</body>
+
+</html>
