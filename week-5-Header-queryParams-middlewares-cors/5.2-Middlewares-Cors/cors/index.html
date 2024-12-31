@@ -17,6 +17,7 @@
             const b = document.getElementById("b").value;
             //Here i used post method bcz in index.js i only created http server for post route i handles only post method
             axios.post("http://localhost:3000/sum/", {
+                //Sending data in the body
                 a: a,
                 b: b,
             });

@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); //To parse the JSON data from body in the post request
+app.use(cors()); // To allow cross-origin requests
 
 app.post("/sum/",(req,res)=>{
     const a = parseInt(req.body.a);
