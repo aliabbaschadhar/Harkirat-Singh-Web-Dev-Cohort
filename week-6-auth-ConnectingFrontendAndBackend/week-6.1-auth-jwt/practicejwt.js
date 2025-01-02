@@ -57,6 +57,7 @@ app.get("/me", (req, res) => {
     const username = userDetails.username;
 
     const foundUser = users.find((user) => user.username === username);
+
     if (foundUser) {
         res.send({
             username: foundUser.username,

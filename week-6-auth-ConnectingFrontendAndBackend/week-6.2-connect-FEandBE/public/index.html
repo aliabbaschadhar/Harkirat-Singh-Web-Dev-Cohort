@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <title>Todo</title>
+</head>
+
+<body>
+    <div id="signup">
+        Signup
+        <input id="signup-username" type="text" name="username" placeholder="Username">
+        <input id="signup-password" type="password" name="password" placeholder="Password">
+        <button onclick="signup()">Submit</button>
+    </div>
+    <div id="signin">
+        Signin
+        <input id="signin-username" type="text" name="username" placeholder="Username">
+        <input id="signin-password" type="password" name="password" placeholder="Password">
+        <button onclick="signin()">Submit</button>
+    </div>
+    <div>
+        User information:
+        <div id="information"></div>
+    </div>
+    <div>
+        <button id="logout" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        async function signup() {
+            const username = document.querySelector("#signup-username").value;
+            const password = document.querySelector("#signup-password").value;
+            await axios.post('http://localhost:3000/signup', {
+                username: username,
+                password: password
+            })
+            alert("You are signed up");
+            const signup = document.getElementById("signup");
+            document.body.removeChild(signup);
+        }
+
+        async function signin() {
+            const username = document.querySelector("#signin-username").value;
+            const password = document.querySelector("#signin-password").value;
+            const response = await axios.post('http://localhost:3000/signin', {
+                username: username,
+                password: password
+            })
+            //As we know that the backend would return token and we have to use 
+            // that token in other routes like me so we will store the token in localStorage
+            localStorage.setItem("token", response.data.token);
+            // The token will remain in the local storage until the session expires which means that until se logout
+            alert("You are signed IN")
+            const signin = document.getElementById("signin");
+            document.body.removeChild(signin);
+        }
+
+        async function getUserInformation() {
+            const response = await axios.get("http://localhost:3000/me", {
+                headers: {
+                    token: localStorage.getItem("token"),
+                }
+            })
+            //Getting the values returned in the response bcz the varification has been done now
+            document.getElementById("information").innerHTML = `Username: ${response.data.username} </br> Password: ${response.data.password}`
+        }
+
+        function logout() {
+            // const usernameSignup = document.querySelector("#signup-username");
+            // const passwordSignup = document.querySelector("#signup-password");
+            // const usernameSignin = document.querySelector("#signin-username");
+            // const passwordSignin = document.querySelector("#signin-password");
+
+            // const signin = document.getElementById("signin");
+            // document.body.removeChild(signin);
+            // const signup = document.getElementById("signup");
+            // document.body.removeChild(signup);
+
+            localStorage.removeItem("token");
+
+        }
+        getUserInformation();
+    </script>
+</body>
+
+</html>
