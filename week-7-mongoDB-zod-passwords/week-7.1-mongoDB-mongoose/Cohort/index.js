@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { UserModel, TodoModel } = require("./db");
 const { auth, JWT_SECRET } = require("./auth");
 
-mongoose.connect("mongodb+srv://admin:KrxTrwBKvcLhkX2S@cluster0.txbhf.mongodb.net/todo-week-7");
+mongoose.connect("");
 const app = express();
 
 app.use(express.json()); // because we are parsing the body

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const { UserModel, TodoModel } = require("./db");
 const { JWT_SECRET, auth } = require("./auth");
 
-mongoose.connect("mongodb+srv://admin:KrxTrwBKvcLhkX2S@cluster0.txbhf.mongodb.net/todo-app-cohort")
+mongoose.connect("")
 
 const app = express();
 app.use(express.json()); // for parsing body
