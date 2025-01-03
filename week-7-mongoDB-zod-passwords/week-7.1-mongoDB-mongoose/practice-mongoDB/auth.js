@@ -1,20 +1,19 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "fasjajka89172349";
+const JWT_SECRET = "afjkaljfal008q409";
 
 function auth(req, res, next) {
     const token = req.headers.token;
-
     const decodedData = jwt.verify(token, JWT_SECRET);
 
     if (decodedData) {
-        req.userId = decodedData.id;
+        req.userId = decodedData._id;
         next();
     } else {
-        req.status(403).send({ msg: "You are unauthorized!!" });
+        res.status(403).json({ msg: "Incorrect credentials" });
     }
 }
 
 module.exports = {
-    auth,
     JWT_SECRET,
+    auth,
 }

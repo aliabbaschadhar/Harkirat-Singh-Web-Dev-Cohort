@@ -15,7 +15,12 @@ const Todo = new Schema({
     userId: ObjectId,
 })
 
+// DataModel ==> A data model is a conceptual representation of how data is organized and structured within a database system.
+
 const UserModel = mongoose.model("users", User);
+// this creates a model according to the given User Schema and now all the operations will be done on that model while keeping in mind that all the incoming data must follow the schema.
+// This line says that create a model according to User Schema and store the data inside the "users" collection.
+
 const TodoModel = mongoose.model("todos", Todo);
 
 module.exports = {
