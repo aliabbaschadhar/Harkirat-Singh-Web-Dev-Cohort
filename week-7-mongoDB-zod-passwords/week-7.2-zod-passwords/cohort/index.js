@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const { z } = require("zod");
 
-mongoose.connect("mongodb+srv://admin:KrxTrwBKvcLhkX2S@cluster0.txbhf.mongodb.net/zod-todo-cohort")
+mongoose.connect("");
 
 const app = express();
 app.use(express.json());
