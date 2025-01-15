@@ -1,49 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react';
+import usePrev from './hooks/usePrev';
+import useDebounce from './hooks/useDebounce';
 import './App.css'
-import { useFetch } from './hooks/useFetch';
+// import { useFetch } from './hooks/useFetch';
 
-//Custom Hook
-function useCounter() {
-  const [count, setCount] = useState(0);
-
-  function increaseCount() {
-    setCount(c => c + 1);
-  }
-
-  return { count, increaseCount };
-}
-
-// function useFetch() {
-//   const [post, setPost] = useState({});
-
-//   const getPost = async () => {
-//     const respose = await fetch("https://jsonplaceholder.typicode.com/todos/1");
-//     const json = await respose.json();
-//     setPost(json);
-//   }
-
-//   //Want to run that logic when the component mounts for the first time in the DOM
-//   useEffect(() => {
-//     getPost();//We want to perform async task here but in react we can't make useEffect async
-//     // so for that we will create our own function getPost();
-//   }, [])
-
-//   return { post };
-// }
-
-// Returns the previous value stored in the state
-function usePrev(value) {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value])
-
-  return ref.current;
-}
 
 
 function App() {
+  const [inputVal, setInputVal] = useState("");
+  const deboucedValue = useDebounce(inputVal, 200);
+
+  useEffect(() => {
+    //Run this expensive function
+    console.log("Expensive function ran!")
+  }, [deboucedValue])
+
+
   //useCounter
   // const { count, increaseCount } = useCounter();
 
@@ -72,6 +44,10 @@ function App() {
         <div>Now count is : {state}</div>
         <button onClick={() => setState(prev => prev + 1)}>Click me to increase the state</button>
         <div>Previous value was : {prev}</div>
+      </div>
+
+      <div>
+        <input type="text" onChange={(e) => setInputVal(e.target.value)} />
       </div>
     </>
   )
