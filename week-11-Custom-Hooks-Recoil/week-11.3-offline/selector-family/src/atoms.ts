@@ -1,4 +1,4 @@
-import { atomFamily, selectorFamily } from "recoil";
+import { atom, atomFamily, selectorFamily } from "recoil";
 import axios from "axios";
 
 export const todosAtomFamily = atomFamily({
@@ -11,3 +11,14 @@ export const todosAtomFamily = atomFamily({
     },
   })
 });
+
+export const todoAtomfamily = atomFamily({
+  key : "todo",
+  default : selectorFamily({
+    key : "todoSelector",
+    get : (id)=>async({get}){
+      const res = await axios.get(`http://sum-server-id=${id}`);
+      return res.data.todo;
+    },
+  })
+})
