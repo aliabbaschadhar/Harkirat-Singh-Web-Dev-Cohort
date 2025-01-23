@@ -1,8 +1,6 @@
-import e from "cors";
 import { useRef } from "react"
 
-
-export default function Otp({ number }) {
+function Otp({ number }) {
     const refs = useRef([]);
     return (
         <div className="flex justify-center gap-3">
@@ -46,3 +44,5 @@ function SubOpt({ refrence, onDone, onBack }) {
         </div>
     )
 }
+
+export default Otp;
