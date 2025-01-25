@@ -1,3 +1,4 @@
 node_modules/.bin/
 node_modules/.typescript
+dist
 node_modules/.package-lock.json
