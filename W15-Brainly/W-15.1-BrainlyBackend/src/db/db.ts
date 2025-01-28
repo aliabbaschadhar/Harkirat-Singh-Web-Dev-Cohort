@@ -1,6 +1,17 @@
 import mongoose, { model, Schema, Types } from "mongoose";
+import dotenv from "dotenv"
 
-mongoose.connect("mongodb+srv://admin:KrxTrwBKvcLhkX2S@cluster0.txbhf.mongodb.net/second-brain")
+dotenv.config();
+
+const Connection = process.env.DBConnection;
+
+if (!Connection) {
+    throw new Error("Connection is not defined");
+}
+
+mongoose.connect(Connection.toString());
+
+const contentTypes = ['image', 'video', 'article', 'audio'];
 
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
@@ -11,6 +22,7 @@ const UserSchema = new Schema({
 const contentSchema = new Schema({
     title: String,
     link: String,
+    cType: { type: String, enum: contentTypes },
     tags: [{ type: Schema.Types.ObjectId, ref: "tags" }],
     userId: { type: Schema.Types.ObjectId, ref: 'users' }
 })
@@ -22,5 +34,4 @@ const contentModel = model("contents", contentSchema);
 export {
     userModel,
     contentModel,
-    contentSchema,
 }

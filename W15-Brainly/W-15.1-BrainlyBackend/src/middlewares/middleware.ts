@@ -7,7 +7,7 @@ dotenv.config(); // To load the .evn
 
 const SECRET = process.env.JWT_SECRET;
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
     userId?: string,
 }
 
@@ -42,6 +42,7 @@ export const userMiddleware = (req: CustomRequest, res: Response, next: NextFunc
     try {
         const decoded = jwt.verify(token as string, SECRET) as { id: string };
         req.userId = decoded.id;
+        next();
     }
     catch (error) {
         res.status(403).send({
