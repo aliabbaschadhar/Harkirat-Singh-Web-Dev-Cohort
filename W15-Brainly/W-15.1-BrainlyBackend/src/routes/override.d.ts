@@ -1,7 +1,4 @@
-export { }; // This ensures the file is treated as a module, avoiding global scope conflicts
-
 // Extending the Express Request interface with a new property("userId")
-
 declare global {
     namespace Express {
         // The request interface from the express module is being extended here
