@@ -31,7 +31,7 @@ export const Button = ({ variant, size, onClick, text, startIcon, endIcon }: But
         >
             {startIcon ? <div className="pr-2">{startIcon}</div> : null}
             {text}
-            {endIcon ? <div className="pr-2"> {endIcon}</div> : null}
+            {endIcon ? <div className="pl-2"> {endIcon}</div> : null}
         </button>
     )
 }
