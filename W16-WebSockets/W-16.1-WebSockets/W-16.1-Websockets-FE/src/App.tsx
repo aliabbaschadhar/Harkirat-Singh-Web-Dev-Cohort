@@ -12,6 +12,7 @@ function App() {
     if (!inputRef.current) {
       return;
     }
+    //@ts-ignore
     const msg = inputRef.current.value;
     //@ts-ignore
     socket.send(msg);
