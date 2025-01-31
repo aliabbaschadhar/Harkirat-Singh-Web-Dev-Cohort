@@ -2,43 +2,43 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [socket, setSocket] = useState<WebSocket | undefined>(undefined);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [socket, setSocket] = useState();
+  const inputRef = useRef();
 
-  const sendMessage = () => {
-    if (!inputRef.current || !socket) return;
+  function sendMessage() {
+    if (!socket) {
+      return;
+    }
+    if (!inputRef.current) {
+      return;
+    }
+    //@ts-ignore
     const msg = inputRef.current.value;
+    //@ts-ignore
     socket.send(msg);
-  };
+  }
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8000");
+    const ws = new WebSocket("ws://localhost:8080");
+    setSocket(ws);
 
-    ws.onopen = () => {
-      setSocket(ws);
-    }
-
-    ws.onerror = ((error) => {
-      console.error(error);
-    })
-
+    // To received message
     ws.onmessage = (event) => {
-      alert(event.data);
+      alert(event.data)
     }
-  }, []);
+  }, [])
 
   return (
     <div>
       <input
+        // @ts-ignore
         ref={inputRef}
         type="text"
-        placeholder='Write message here...'
-        className='p-4 mr-2 rounded-lg'
+        className='bg-gray-300 text-black p-2 rounded-lg mr-2'
       />
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={sendMessage}> Send</button>
     </div>
   )
 }
 
 export default App
-
