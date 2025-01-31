@@ -1,0 +1,22 @@
+{
+  "name": "w-16.1-websockets",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch ./src --ext ts --exec \"tsc -b && node ./dist/index.js\" # This runs the index.ts file in the dist folder with node, and watches for changes in the src folder, recompiling with tsc and rerunning the changed file when it changes. --ext ts is used to tell nodemon to watch for .ts files instead of .js, and --exec is used to run a custom command when a watched file changes"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.12.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@types/ws": "^8.5.14",
+    "nodemon": "^3.1.9",
+    "ws": "^8.18.0"
+  }
+}
