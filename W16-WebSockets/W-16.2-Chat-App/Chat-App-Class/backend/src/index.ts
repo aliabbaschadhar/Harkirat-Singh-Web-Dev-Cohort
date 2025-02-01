@@ -2,6 +2,38 @@ import { WebSocketServer, WebSocket } from "ws";
 
 const wss = new WebSocketServer({ port: 8080 });
 
+interface User {
+    socket: WebSocket,
+    room: string,
+}
+
+let allSockets1: User[] = []
+
+// Will look like this
+
+// [
+//     {socket:socket, room:"room1"},
+//     {socket:socket2, room:"room4131"},
+//     {socket:socket1,room:"room1"},
+// ]
+
+wss.on("connection", (socket) => {
+
+    socket.on("message", (message) => {
+
+    })
+
+    socket.on("disconnect", () => {
+        allSockets1 = allSockets1.filter(x => x != socket)
+    })
+})
+
+
+
+
+
+//****************************Simple Chat App ******************* */
+
 let allSockets: WebSocket[] = [];
 
 wss.on("connection", (ws) => {
