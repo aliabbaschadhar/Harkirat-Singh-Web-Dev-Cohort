@@ -1,33 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState(["hello", "how", "are"])
+  const wssRef = useRef();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    const wss = new WebSocket("ws://localhost:8080");
+
+    wssRef.current = wss;
+    wss.onopen = () => {
+      wss.send(JSON.stringify({
+        "type": "join",
+        "payload": {
+          "roomId": "red"
+        }
+      }))
+    }
+    wss.onmessage = (event) => {
+      setMessage(message => [...message, event.data]);
+    }
+
+    return () => {
+      wss.close();
+    }
+
+  }, [])
+
+  function sendMessages() {
+    const message = inputRef.current!.value;
+    wssRef.current.send(JSON.stringify({
+      "type": "chat",
+      "payload": {
+        "message": message,
+      }
+    }
+    ))
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='h-screen w-[50vw]'>
+        <div className='h-[80vh] bg-gray-300 rounded-2xl' >
+
+          {message.map((msg, index) => (
+            <div
+              className='w-10 h-3 bg-blue-400 text-black m-3 rounded-3xl'
+              key={index}
+            >{msg}</div>
+          ))}
+        </div>
+        <div>
+          <input
+            ref={inputRef}
+            type="text"
+            className='p-4 mx-3 rounded-xl text-black bg-pink-200 m-3'
+          />
+          <button
+            onClick={() => sendMessages}
+          >Send</button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
