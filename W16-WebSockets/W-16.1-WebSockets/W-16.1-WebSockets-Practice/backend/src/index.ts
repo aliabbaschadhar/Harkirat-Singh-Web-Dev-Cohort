@@ -24,7 +24,7 @@ wss.on("connection", (ws) => {
 //     // If error comes
 //     ws.on("error", console.error);
 
-//     // To received message
+//     // To received message from client
 //     ws.on("message", (event) => {
 //         console.log(event.toString())
 //     })

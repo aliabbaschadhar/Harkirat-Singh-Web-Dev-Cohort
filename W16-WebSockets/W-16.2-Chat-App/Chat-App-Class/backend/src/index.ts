@@ -64,8 +64,6 @@ wss.on("connection", (socket) => {
 
 
 
-
-
 //****************************Simple Chat App ******************* */
 
 // let allSockets: WebSocket[] = [];
