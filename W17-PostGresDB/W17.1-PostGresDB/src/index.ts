@@ -27,7 +27,7 @@ app.post("signup", async (req, res) => {
 
         const inserQuery = `INSERT INTO users (username,password,email) VALUES ($1,$2,$3)`;
         // Using parameterized variables queries prevents SQL injection by separating SQL code from user input. User inputs are passed as parameters, which the database treats as data only, not executable code.
-        //Week 17.1 done!!!
+
 
         const response = await pgClient.query(inserQuery, [username, password, email]);
 
@@ -51,5 +51,5 @@ app.post("signup", async (req, res) => {
 //     await pgClient.end(); // Close the database connection after we're done with it
 // }
 
-main();
+// main();
 
