@@ -30,7 +30,7 @@ app.post("signup", async (req, res) => {
 
         const addressInsertResponse = await pgClient.query(insertAddressQuery, [city, country, street, pincode, user_id])
 
-        await pgClient.query("COMMIT;") //End here
+        await pgClient.query("COMMIT;") //Ends here
 
         res.json({
             msg: "You have signUp"
@@ -41,4 +41,34 @@ app.post("signup", async (req, res) => {
             msg: "Error while signing UP!"
         })
     }
+})
+
+app.get("/metadata", async (req, res) => {
+    const { id } = req.query;
+
+    if (!id) {
+        res.json({
+            msg: "Please provide id"
+        })
+        return;
+    }
+
+    const query1 = `SELECT username,email,id 
+    FROM users
+    WHERE id=$1`;
+
+    const response1 = await pgClient.query(query1, [id]);
+
+    const query2 = `SELECT * FROM addresses WHERE user_id=$1`;
+    const response2 = await pgClient.query(query2, [id]);
+
+    res.json({
+        user: response1.rows[0],
+        address: response2.rows,
+    })
+    // We are trying to get users information and address information from the tables using id 
+})
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 })
