@@ -87,10 +87,12 @@ app.get("/better-metadata", async (req, res) => {
     ON u.id = a.user_id
     WHERE user_id = $1`;
 
+    // JOINs are expensive but sort of clean to use but sometimes we do not need to use them we can prefer doing two queries if the data is too big to handle.
+
     const response = await pgClient.query(query, [id]);
 
     res.json({
-        response
+        response: response.rows
     })
 })
 
