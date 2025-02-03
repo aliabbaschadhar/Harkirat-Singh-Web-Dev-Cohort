@@ -69,6 +69,32 @@ app.get("/metadata", async (req, res) => {
     // We are trying to get users information and address information from the tables using id 
 })
 
+app.get("/better-metadata", async (req, res) => {
+    const { id } = req.query;
+
+    if (!id) {
+        res.json({
+            msg: "Please provide id"
+        })
+        return;
+    }
+
+    // We can replace users to u and addresses to a by using alias like done down below
+
+    const query = `SELECT u.id, u.username, u.email, a.city, a.country, a.street, a.pincode
+    FROM users u 
+    JOIN addresses a 
+    ON u.id = a.user_id
+    WHERE user_id = $1`;
+
+    const response = await pgClient.query(query, [id]);
+
+    res.json({
+        response
+    })
+})
+
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 })
