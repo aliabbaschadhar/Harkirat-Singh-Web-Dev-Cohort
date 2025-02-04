@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { create } from "domain";
 
 const client = new PrismaClient();
 
@@ -17,7 +18,20 @@ async function createUser() {
     } catch (error) {
         console.error("Error creating user:", error);
     }
+};
+createUser();
+
+async function deleteUser() {
+    try {
+        await client.user.delete({
+            where: {
+                id: 3,
+            }
+        })
+    } catch (error) {
+        //@ts-ignore
+        console.log("Error occured while deleting: ", error.meta.cause);
+    }
 }
 
-createUser();
 
