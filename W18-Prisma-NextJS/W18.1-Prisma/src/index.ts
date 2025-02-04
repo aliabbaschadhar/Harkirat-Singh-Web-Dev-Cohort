@@ -19,7 +19,25 @@ async function createUser() {
         console.error("Error creating user:", error);
     }
 };
-createUser();
+// createUser();
+
+async function updateUser() {
+    try {
+        const updatedUser = await client.user.update({
+            where: {
+                id: 7,
+            },
+            data: {
+                city: "Howareyou",
+            }
+        })
+        console.log("User updated successfully: ", updatedUser)
+    } catch (error) {
+        console.log("Error occurd while updating user:", error);
+    }
+}
+
+updateUser();
 
 async function deleteUser() {
     try {
