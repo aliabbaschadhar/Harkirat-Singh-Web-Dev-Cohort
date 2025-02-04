@@ -6,3 +6,10 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       Int    @id @default(autoincrement()) //When you define a field with @id attribute, it automatically implies that the field is primary key and will be auto-incremented.
+  username String @unique
+  password String
+  age      Int
+}
