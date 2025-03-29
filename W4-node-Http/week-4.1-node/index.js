@@ -11,6 +11,7 @@ fs.writeFileSync('hello.txt', 'Hello World!');
 
 const os = require('os');
 console.log(os.platform());
+console.log(os.arch());
 
 const http = require('http');
 const server = http.createServer((req, res) => {
