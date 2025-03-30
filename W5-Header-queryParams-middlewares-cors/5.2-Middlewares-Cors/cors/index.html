@@ -10,19 +10,27 @@
         <input id="a" type="text" placeholder="First value" />
         <input id="b" type="text" placeholder="Second value">
         <button onclick="sendRequest()">Find sum</button>
+        <div id="result"></div>
     </div>
     <script>
         async function sendRequest() {
             const a = document.querySelector("#a").value;
             const b = document.getElementById("b").value;
             //Here i used post method bcz in index.js i only created http server for post route i handles only post method
-            axios.post("http://localhost:3000/sum/", {
-                //Sending data in the body
-                a: a,
-                b: b,
-            });
+            try {
+                const response = await axios.post("http://localhost:3000/sum/", {
+                    //Sending data in the body
+                    a: a,
+                    b: b,
+                });
+
+                // Display the result
+                document.getElementById("result").textContent = `Sum: ${response.data.ans}`;
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("result").textContent = "Error occurred";
+            }
         }
-        sendRequest();
     </script>
 </body>
 

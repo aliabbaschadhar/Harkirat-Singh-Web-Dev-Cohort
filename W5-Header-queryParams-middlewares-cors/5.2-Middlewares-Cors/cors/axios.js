@@ -11,11 +11,13 @@ const axios = require("axios");
 //             headers: The response headers.
 //                  config: The request configuration.
 
-// axios.post("http://localhost:3000/sum/", {
-//     a: 1,
-//     b: 2,
-// });
-//get method
+axios.post("http://localhost:3000/sum/", {
+    a: 1,
+    b: 2,
+});
+// get method
+
+
 axios({
     method: 'get',
     url: 'https://api.example.com/data',
@@ -34,6 +36,7 @@ axios({
     .catch(error => {
         console.error(error);
     });
+
 
 //axios.post method
 
