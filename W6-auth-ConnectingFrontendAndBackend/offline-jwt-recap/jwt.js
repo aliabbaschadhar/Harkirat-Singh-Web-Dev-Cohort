@@ -1,7 +1,7 @@
 
 const zod = require("zod");
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "iloveyoutoo";
+const JWT_SECRET = "Bapastunnig";
 
 const emailSchema = zod.string().email();
 const passwordSchema = zod.string().min(6);
@@ -41,3 +41,7 @@ function verifyJWT(token) {
 const ans = signJWT("harkajrata@gmail.com", "15298aafjlka");
 const ans2 = decodedJWT(ans);
 console.log(ans2)
+
+// Add this to test the verifyJWT function
+const ans3 = verifyJWT(ans);
+console.log(ans3);

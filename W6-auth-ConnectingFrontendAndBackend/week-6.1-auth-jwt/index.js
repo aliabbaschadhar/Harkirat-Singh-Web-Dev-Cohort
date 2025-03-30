@@ -52,7 +52,8 @@ app.post('/signin', (req, res) => {
     if (userFound) {
         const generatedToken = generateToken();
         // user.push({token : generatedToken}) // Adding another object in the user object
-        userFound.token = generatedToken;
+
+        userFound.token = generatedToken;//F**king js
         res.status(200).send({ token: generatedToken });
     } else {
         res.status(403).send({ msg: "Your username or password is incorrect" });
