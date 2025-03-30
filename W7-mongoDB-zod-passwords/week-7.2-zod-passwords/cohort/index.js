@@ -88,7 +88,7 @@ app.post("/signin", async function (req, res) {
 
     if (passwordMatch) {
         const token = jwt.sign({
-            id: response._id.toString()
+            id: response._id.toString() // toString is used to covert the mongoDB ObjectID because it is binary form .
         }, JWT_SECRET);
 
         res.json({
