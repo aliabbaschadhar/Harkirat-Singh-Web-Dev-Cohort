@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
+// MongoDB is a schemaless database. We can insert anything we want into the mongoDB and it would not complain.
+// But if we try to do the samething in SQL database it will give errors
+
+
 //Defining Schema of user database
 const User = new Schema({
     email: { type: String, unique: true },
