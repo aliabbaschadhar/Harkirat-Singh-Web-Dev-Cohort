@@ -16,7 +16,7 @@ function App() {
 }
 
 function Card1() {
-  throw new Error("Error in Card 1");
+  // throw new Error("Error in Card 1");
   return (
     <div
       style={{
