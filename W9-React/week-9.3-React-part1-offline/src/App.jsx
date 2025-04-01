@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 //*********************useEffect*******************//
 // Function to fetch data from an API
 const fetchData = async () => {
     try {
-        const response = await fetch('https://api.example.com/data')
+        const response = await fetch('https://api.example.com/data');
         const data = await response.json()
-        return data
+        return data;
     } catch (error) {
         console.error('Error fetching data:', error)
         return null
@@ -57,7 +58,10 @@ export default function App() {
         </div>
     )
 }
-
 function Greeting(props) {
     return <div>Hello {props.name}</div>
 }
+
+Greeting.propTypes = {
+    name: PropTypes.string.isRequired
+};
