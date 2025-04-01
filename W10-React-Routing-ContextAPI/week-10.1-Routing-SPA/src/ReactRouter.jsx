@@ -31,7 +31,7 @@ function App() {
       |
       <a href="/neet/online-coaching-class-12">Class 12</a> */}
       {/* If we use that kind of routing in a react app we will lose all the benefits of single page application */}
-      {/* Whenever we click an <a/> tag in react it gets load from scratch and fetch page's HTML & JS again from server which is not optimized. */}
+      {/* Whenever we click an <a/> tag in react it gets load from scratch and fetch page's HTML & JS again from server which is not optimized bcz due to that react have to build the virtual dom again and again. */}
 
 
       <BrowserRouter>
