@@ -117,7 +117,16 @@ userRouter.post("/signin", async (req, res) => {
 })
 
 
-userRouter.get("/purchases", (req, res) => {
+userRouter.get("/purchases", async (req, res) => {
+    await userModel.updateOne(
+        {
+            "id": "1",
+        },
+        {
+            // $push is used to add an element to an array and if array doesn't exists then it creates a new array
+            $push: { purchasedCourses: _courseId } // _courseId is the id of the course
+        }
+    )
     res.json({ msg: "To see all the purchased courses" })
 })
 
