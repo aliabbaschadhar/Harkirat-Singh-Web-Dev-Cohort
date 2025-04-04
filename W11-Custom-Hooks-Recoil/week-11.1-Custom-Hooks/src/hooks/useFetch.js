@@ -12,7 +12,7 @@ function useFetch(url) {
         setPost(json);
     }
 
-    // Run the fetch function when the component mounts
+    // Run the fetch function when the component mounts and whenever the URL changes
     useEffect(() => {
         getPost();
     }, [url]);

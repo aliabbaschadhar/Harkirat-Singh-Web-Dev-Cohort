@@ -4,7 +4,7 @@
 import { useEffect, useRef } from 'react';
 
 function usePrev(value) {
-    const ref = useRef(value);
+    const ref = useRef();
 
     useEffect(() => {
         ref.current = value;
@@ -12,5 +12,7 @@ function usePrev(value) {
 
     return ref.current; // Returns the previous value
 }
+
+// It returns first and effect gets called later
 
 export default usePrev;
