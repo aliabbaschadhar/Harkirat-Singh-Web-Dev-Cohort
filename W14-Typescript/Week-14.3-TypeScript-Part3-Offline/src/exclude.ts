@@ -1,7 +1,7 @@
 // In a function that can accept several types of inputs but you want to exclude specific types from being passed to it.
 
 //! It works with only union of types not with intesection of types
-// ! if exclude is used with intersection then it will cause unexpected behaviours
+//! if exclude is used with intersection then it will cause unexpected behaviours
 
 type Event2 = 'click' | "scroll" | "mousemove";
 type ExcludeEvent = Exclude<Event2, 'scroll'>

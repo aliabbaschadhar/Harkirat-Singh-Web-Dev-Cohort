@@ -13,6 +13,7 @@ const config: Config = {
     apiKey: "abcdefghijklmonpqrstuvwxyz"
 };
 
+config.apiKey = "newapikey"; // Error: Cannot assign to 'apiKey' because it is a read-only property
 // **************************** Second **************************//
 
 interface Config1 {
