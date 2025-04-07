@@ -27,7 +27,6 @@ export const userMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     try {
         const decoded = jwt.verify(token as string, SECRET);
-        //@ts-ignore
         req.userId = decoded.id;
         next();
     }
