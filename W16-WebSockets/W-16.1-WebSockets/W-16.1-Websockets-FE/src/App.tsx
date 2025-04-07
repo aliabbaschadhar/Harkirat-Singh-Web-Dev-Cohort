@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [socket, setSocket] = useState();
-  const inputRef = useRef();
+  const [socket, setSocket] = useState<WebSocket | null>();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function sendMessage() {
     if (!socket) {
@@ -12,14 +12,13 @@ function App() {
     if (!inputRef.current) {
       return;
     }
-    //@ts-ignore
-    const msg = inputRef.current.value;
-    //@ts-ignore
+
+    const msg = inputRef.current?.value;
     socket.send(msg);
   }
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("ws://localhost:8082");
     setSocket(ws);
 
     // To received message
@@ -31,7 +30,6 @@ function App() {
   return (
     <div>
       <input
-        // @ts-ignore
         ref={inputRef}
         type="text"
         className='bg-gray-300 text-black p-2 rounded-lg mr-2'

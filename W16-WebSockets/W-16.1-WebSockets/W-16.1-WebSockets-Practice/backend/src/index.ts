@@ -1,35 +1,17 @@
-import { WebSocketServer } from "ws";
+import { WebSocket, WebSocketServer } from "ws";
 
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: 8083 });
 
 wss.on("connection", (ws) => {
-    console.log("Connected")
-    ws.send("Connected to a ws server");
+    console.log("User connected")!
 
-    // Create a ping pong game
-
-    ws.on("message", (event) => {
-        if (event.toString() === "ping") {
+    ws.on("message", (data) => {
+        if (data.toString() === "ping") {
             ws.send("pong");
-        } else if (event.toString() === "pong") {
+        } else if (data.toString() === "pong") {
             ws.send("ping");
         } else {
-            ws.send("Bro we are playing ping pong!!!");
+            ws.send("Tumhain bapa ki qasam");
         }
     })
-})
-
-// wss.on("connection", (ws) => {
-//     console.log("Connected");
-//     // If error comes
-//     ws.on("error", console.error);
-
-//     // To received message from client
-//     ws.on("message", (event) => {
-//         console.log(event.toString())
-//     })
-
-//     // Send a message to client
-//     ws.send("Something");
-
-// })
+});
