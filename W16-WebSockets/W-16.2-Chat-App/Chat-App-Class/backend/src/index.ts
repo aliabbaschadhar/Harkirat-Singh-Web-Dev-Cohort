@@ -1,6 +1,6 @@
 import { WebSocketServer, WebSocket } from "ws";
 
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: 8082 });
 
 interface User {
     socket: WebSocket,

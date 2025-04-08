@@ -3,12 +3,11 @@ import './App.css'
 
 function App() {
   const [message, setMessage] = useState(["hello", "how", "are"])
-  const wssRef = useRef();
-  const inputRef = useRef();
+  const wssRef = useRef<WebSocket | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const wss = new WebSocket("ws://localhost:8080");
-
+    const wss = new WebSocket("ws://localhost:8082");
     wssRef.current = wss;
     wss.onopen = () => {
       wss.send(JSON.stringify({
@@ -30,7 +29,7 @@ function App() {
 
   function sendMessages() {
     const message = inputRef.current!.value;
-    wssRef.current.send(JSON.stringify({
+    wssRef.current?.send(JSON.stringify({
       "type": "chat",
       "payload": {
         "message": message,
