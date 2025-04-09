@@ -78,6 +78,10 @@ Keep components as server components when possible for better performance, and o
     **NextJS-Optimization-PageRouter**
     ![NextJS-AppRouter](./public/appRouterNext.png)
 
+    **Videos**
+    - [Piyush Garg: Next.js Server and Client Components Explained](https://www.youtube.com/watch?v=bugO1tmSDpM)
+    - [byteGrad: Understanding Client vs Server Components in Next.js](https://www.youtube.com/watch?v=Qdkg_mrniLk&t=18s)
+
 ## Getting Started
 
 First, run the development server:
