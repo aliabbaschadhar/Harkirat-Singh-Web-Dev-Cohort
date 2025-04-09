@@ -44,7 +44,7 @@ Next.js offers several advantages over traditional React applications:
 
 ### Client-Side Rendering (CSR)
 
-![CSR in React](/public/csr(react).png)
+![CSR in React](/csr(react).png)
 
 In traditional React apps, the browser loads a minimal HTML file and JavaScript bundle. The JavaScript then renders the application in the browser, making data fetching requests after the initial load. This approach can lead to:
 
@@ -54,7 +54,7 @@ In traditional React apps, the browser loads a minimal HTML file and JavaScript 
 
 ### Server-Side Rendering (SSR)
 
-![SSR in Next.js](/public/ssr(next).png)
+![SSR in Next.js](/ssr(next).png)
 
 Next.js can render pages on the server for each request:
 
