@@ -1,13 +1,28 @@
-"use client";
-
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ChangeEventHandler, useState } from "react";
+// We can also do data fetching in nextjs like and it is the mostly recommended approach
+// import { PrismaClient } from "@prisma/client";
+
+// const client = new PrismaClient();
+
+// async function getUserDetails() {
+//     try {
+//         const user = await client.user.findFirst({});
+//         return {
+//             name: user?.username,
+//             email: user?.username,
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
 
 export default function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter();
+    // const userData = await getUserDetails();
 
     return <div className="h-screen flex justify-center flex-col">
         <div className="flex justify-center">
@@ -16,7 +31,7 @@ export default function Signup() {
                     <div className="px-10">
                         <div className="text-3xl font-extrabold">
                             Sign up
-                        </div>
+                        </div>error
                     </div>
                     <div className="pt-2">
                         <LabelledInput onChange={(e) => {
