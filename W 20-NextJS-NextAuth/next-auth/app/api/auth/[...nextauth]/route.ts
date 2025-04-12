@@ -1,10 +1,12 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
     providers: [
-        Credentials({
-            name: "Login with your email",
+        CredentialsProvider({
+            name: "email",
             credentials: {
                 username: { label: "Username", type: "text", placeholder: "Enter your email" },
                 password: { label: "Password", type: "password" }
@@ -26,8 +28,17 @@ const handler = NextAuth({
                 if (user) return user;
                 else return null;
             }
+        }),
+        GoogleProvider({
+            clientId: "asd",
+            clientSecret: "Asd",
+        }),
+        GithubProvider({
+            clientId: "asd",
+            clientSecret: "ads"
         })
-    ]
+    ],
+    secret: process.env.NEXTAUTH_SECRET
 })
 
 export { handler as GET, handler as POST }
