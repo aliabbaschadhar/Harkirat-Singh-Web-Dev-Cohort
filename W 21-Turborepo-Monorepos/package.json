@@ -1,5 +1,5 @@
 {
-  "name": "pnpm-turborepo-21",
+  "name": "W 21-Turborepo-Monorepos",
   "private": true,
   "scripts": {
     "build": "turbo run build",
