@@ -27,6 +27,7 @@ userRouter.post("/signup", async (req, res) => {
 
     try {
         const { username, password, lastName, firstName } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 5);
 
         //Check whether user already exists or not
         const userFound = await userModel.findOne({
@@ -42,7 +43,7 @@ userRouter.post("/signup", async (req, res) => {
 
         const user = await userModel.create({
             username,
-            password,
+            password: hashedPassword,
             lastName,
             firstName
         })
