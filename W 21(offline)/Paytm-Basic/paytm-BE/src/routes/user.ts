@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { userModel } from "../db/schema";
 
 const userRouter = Router();
+const JWT_SECRET = process.env.SECRET;
 
 userRouter.post("/signup", async (req, res) => {
     const requiredBody = z.object({
@@ -27,6 +28,18 @@ userRouter.post("/signup", async (req, res) => {
     try {
         const { username, password, lastName, firstName } = req.body;
 
+        //Check whether user already exists or not
+        const userFound = await userModel.findOne({
+            username
+        })
+        if (userFound) {
+            res.status(411).json({
+                msg: "User already exists,signIn",
+                userId: userFound._id
+            })
+            return;
+        }
+
         const user = await userModel.create({
             username,
             password,
@@ -35,13 +48,14 @@ userRouter.post("/signup", async (req, res) => {
         })
 
         if (user) {
-            res.json({
+            res.status(201).json({
                 userId: user._id,
-                msg: "User signed "
+                msg: "User signed up ",
+                token: jwt.sign(user._id, JWT_SECRET as string),
             })
         }
     } catch (error) {
-        res.json({
+        res.status(403).json({
             error: error,
             msg: "Error occured while signing up"
         })
