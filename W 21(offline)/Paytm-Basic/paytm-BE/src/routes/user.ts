@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userModel } from "../db/schema";
 import { configDotenv } from "dotenv";
+import { userMiddleware } from "../auth/userMiddleware";
 
 declare global {
     namespace Express {
@@ -149,6 +150,63 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
     }
 });
 
+userRouter.put("/", userMiddleware, async (req: Request, res: Response) => {
+
+    const updateBody = z.object({
+        password: z.string().optional(),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+    })
+
+    const { success } = updateBody.safeParse(req.body);
+
+    if (!success) {
+        res.status(411).json({
+            msg: "Error while updating information"
+        })
+    }
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+        { _id: req.userId }, req.body, { new: true, runValidators: true }
+    )
+
+    res.status(200).json({
+        msg: "updated sucessfully",
+        updatedUser: updatedUser
+    })
+
+    // try {
+
+    //     const { password, firstName, lastName } = req.body;
+
+    //     const userId = req.userId;
+
+    //     const updatedUser = await userModel.findOneAndUpdate(
+    //         { _id: userId },
+    //         {
+    //             $set: {
+    //                 password: password,
+    //                 firstName: firstName,
+    //                 lastName: lastName
+    //             }
+    //         },
+    //         {
+    //             new: true,
+    //             runValidators: true
+    //         }
+    //     );
+
+    //     res.send(200).json({
+    //         msg: "Content udpated successfully",
+    //         updatedUser: updatedUser
+    //     })
+    // } catch (error) {
+    //     res.status(411).json({
+    //         msg: "Error while updating information"
+    //     })
+    // }
+
+})
 
 export {
     userRouter
