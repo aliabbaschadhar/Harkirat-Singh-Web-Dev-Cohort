@@ -1,10 +1,9 @@
-import express, { Request, Response, Router } from "express";
+import { Request, Response, Router } from "express";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userModel } from "../db/schema";
 import { configDotenv } from "dotenv";
-import { userMiddleware } from "../auth/userMiddleware";
 
 declare global {
     namespace Express {
