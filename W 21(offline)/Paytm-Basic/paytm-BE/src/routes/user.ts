@@ -3,9 +3,21 @@ import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { userModel } from "../db/schema";
+import { configDotenv } from "dotenv";
+import { userMiddleware } from "../auth/userMiddleware";
+
+declare global {
+    namespace Express {
+        interface Request {
+            userId?: string;
+        }
+    }
+}
+
+configDotenv();
 
 const userRouter = Router();
-const JWT_SECRET = process.env.SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 userRouter.post("/signup", async (req: Request, res: Response) => {
     const requiredBody = z.object({
@@ -58,7 +70,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
             const userId = user._id;
             const token = jwt.sign({
                 userId
-            }, JWT_SECRET as string);
+            }, JWT_SECRET as string); // In the decoded object we will see the userId property
 
             console.log("Sending response with token");
             res.status(201).json({
@@ -126,7 +138,7 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
         throw new Error("JWT_SECRET is not defined!");
     }
     try {
-        const token = jwt.sign({ id: user._id }, JWT_SECRET); // sign the jwt token
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET); // Changed id to userId to match declaration
         res.json({
             msg: "User is signIn",
             token: token
@@ -137,6 +149,7 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
         })
     }
 });
+
 
 export {
     userRouter
