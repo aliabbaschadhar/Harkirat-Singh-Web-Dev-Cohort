@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv";
-import mongoose, { Model, model, Schema, Types } from "mongoose";
+import mongoose, { model, Schema, Types } from "mongoose";
 
 configDotenv();
 
@@ -40,7 +40,23 @@ const UserSchema = new Schema({
     },
 })
 
+const AccountSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "users"
+    },
+    balance: {
+        type: Number,
+        required: true,
+    }
+})
+
 const userModel = model("users", UserSchema);
+const accountModel = model("accounts", AccountSchema);
 
 
-export { userModel };
+export {
+    userModel,
+    accountModel,
+};
