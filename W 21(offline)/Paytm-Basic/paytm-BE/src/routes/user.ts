@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { userModel } from "../db/schema";
+import { accountModel, userModel } from "../db/schema";
 import { configDotenv } from "dotenv";
 import { userMiddleware } from "../auth/userMiddleware";
 
@@ -68,6 +68,14 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
         if (user) {
             console.log("User created successfully, generating token");
             const userId = user._id;
+            // --------------Create new account and give the user initial money-------------
+
+            await accountModel.create({
+                userId,
+                balance: 1 + Math.random() * 10000
+            })
+            // -----------------------XXXXXXXXXXX--------------------------
+
             const token = jwt.sign({
                 userId
             }, JWT_SECRET as string); // In the decoded object we will see the userId property
