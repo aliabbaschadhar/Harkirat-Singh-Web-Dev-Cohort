@@ -208,6 +208,35 @@ userRouter.put("/", userMiddleware, async (req: Request, res: Response) => {
 
 })
 
+userRouter.get("/bulk", userMiddleware, async (req: Request, res: Response) => {
+    const filter = req.query.filter || "";
+
+    const users = await userModel.find({
+        // Either the firstName should contain filter or the lastName it will show the user
+        $or: [
+            {
+                firstName: {
+                    "$regex": filter,
+                }
+            },
+            {
+                lastName: {
+                    "$regex": filter,
+                }
+            }
+        ]
+    })
+
+    res.json({
+        user: users.map((user) => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
+    })
+})
+
 export {
     userRouter
 }
