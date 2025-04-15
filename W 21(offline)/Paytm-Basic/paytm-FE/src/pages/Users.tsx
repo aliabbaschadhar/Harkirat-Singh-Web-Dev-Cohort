@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "./"
+import axios from "axios"
+
 
 interface User {
     firstName: string;
@@ -13,18 +15,39 @@ interface UserProps {
 
 export const Users = () => {
     // Replace with backend call
-    const [users, setUsers] = useState<User[]>([{
-        firstName: "Harkirat",
-        lastName: "Singh",
-        _id: 1
-    }]);
+    const [users, setUsers] = useState<User[]>([]);
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        axios.get<{ user: User[] }>("http://localhost:3000/api/v1/user/bulk", {
+            headers: {
+                authorization: `${token}`
+            }
+        })
+            .then((res) => {
+                setUsers(res.data.user);
+            })
+    }, [])
     return <>
         <div className="font-bold mt-6 text-lg">
             Users
         </div>
         <div className="my-2">
-            <input type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
+            <input
+                onChange={(e => {
+                    const value = e.target.value;
+                    const token = localStorage.getItem("token");
+                    axios.get<{ user: User[] }>(`http://localhost:3000/api/v1/user/bulk?filter=${value}`, {
+                        headers: {
+                            authorization: `${token}`
+                        }
+                    })
+                        .then((res) => {
+                            setUsers(res.data.user);
+                        })
+                }
+                )}
+                type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
         </div>
         <div>
             {users.map(user => <User key={user._id} user={user} />)}
