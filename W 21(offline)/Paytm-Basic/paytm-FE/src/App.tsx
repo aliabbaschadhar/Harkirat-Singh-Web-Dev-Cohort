@@ -1,8 +1,18 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Signin, Signup, Dashboard, SendMoney } from "./pages";
+
 function App() {
   return (
-    <div className="bg-blue-500 text-white p-4 m-2 rounded text-5xl flex justify-center">
-      Hello World
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/send" element={<SendMoney />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 
