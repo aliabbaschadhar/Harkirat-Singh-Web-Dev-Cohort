@@ -1,12 +1,8 @@
 import { Router } from "express";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import { configDotenv } from "dotenv";
 import bcrypt from "bcrypt";
-
-configDotenv();
-
-const JWT_SECRET = process.env.JWT_SECRET;
+import { JWT_SECRET } from "@repo/backend-common/config"
 
 const userRouter: Router = Router();
 
