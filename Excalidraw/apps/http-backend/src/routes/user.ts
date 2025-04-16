@@ -3,17 +3,15 @@ import { z } from "zod";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { JWT_SECRET } from "@repo/backend-common/config"
+import { CreateUserSchema, SigninSchema } from "@repo/common/types";
 
 const userRouter: Router = Router();
 
 userRouter.post("/signup", async (req, res) => {
 
-    const requiredBody = z.object({
-        username: z.string().email(),
-        password: z.string().min(3).max(20)
-    })
 
-    const { success, error } = requiredBody.safeParse(req.body);
+
+    const { success, error } = CreateUserSchema.safeParse(req.body);
 
     if (!success) {
         res.status(403).json({
@@ -54,11 +52,8 @@ userRouter.post("/signup", async (req, res) => {
 
 
 userRouter.post("/signin", async (req, res) => {
-    const requiredBody = z.object({
-        username: z.string().email(),
-        password: z.string(),
-    })
-    const { success, error } = requiredBody.safeParse(req.body);
+
+    const { success, error } = SigninSchema.safeParse(req.body);
 
 
     if (!success) {

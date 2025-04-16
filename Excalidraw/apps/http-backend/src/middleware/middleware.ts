@@ -1,7 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express";
-import { configDotenv } from "dotenv";
-
+import { JWT_SECRET } from "@repo/backend-common/config";
 
 declare global {
     namespace Express {
@@ -11,9 +10,6 @@ declare global {
     }
 }
 
-
-configDotenv();
-const JWT_SECRET = process.env.JWT_SECRET ?? "";
 
 export const middleware = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization ?? "";
