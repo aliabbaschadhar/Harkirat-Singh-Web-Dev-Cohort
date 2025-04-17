@@ -1,15 +1,14 @@
 import { Router } from "express";
-import { z } from "zod";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { JWT_SECRET } from "@repo/backend-common/config"
 import { CreateUserSchema, SigninSchema } from "@repo/common/types";
+// import { } from "@repo/db"
+
 
 const userRouter: Router = Router();
 
 userRouter.post("/signup", async (req, res) => {
-
-
 
     const { success, error } = CreateUserSchema.safeParse(req.body);
 
