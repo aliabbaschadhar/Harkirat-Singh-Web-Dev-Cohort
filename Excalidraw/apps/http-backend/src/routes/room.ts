@@ -14,30 +14,55 @@ roomRouter.post("/", middleware, async (req, res) => {
             error: parsedBody.error
         })
         return;
+    } else {
+        console.log("Format is correct")
     }
 
     const { slug } = parsedBody.data
     const userId = req.userId;
 
+    // Verify userId is present
+    if (!userId) {
+        res.status(403).json({
+            msg: "Authentication failed: User ID not found in token",
+        });
+        return;
+    }
+
     try {
+
+        const existingRoom = await prismaClient.room.findFirst({
+            where: {
+                slug: slug
+            }
+        })
+
+        if (existingRoom) {
+            res.json({
+                msg: "Room already exists name should be unique"
+            })
+            return;
+        }
         const createdRoom = await prismaClient.room.create({
             data: {
                 slug,
-                adminId: userId as string
+                adminId: userId
             }
         })
-        res.status(200).json({
+
+        console.log('Room created successfully')
+
+        res.status(201).json({
             roomId: createdRoom.id,
             createdBy: createdRoom.adminId
         })
     } catch (error) {
+        console.error("Room creation error:", error);
         res.status(403).json({
             error: error
         })
     }
 })
-
-
 
 export {
     roomRouter
