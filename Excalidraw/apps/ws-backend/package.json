@@ -15,11 +15,11 @@
     "@repo/typescript-config": "workspace:*",
     "@repo/backend-common": "workspace:*",
     "@repo/common": "workspace:*",
-    "@repo/db": "workspace:*",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/ws": "^8.18.1"
   },
   "dependencies": {
+    "@repo/db": "workspace:*",
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.9",
