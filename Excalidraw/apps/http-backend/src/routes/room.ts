@@ -64,6 +64,22 @@ roomRouter.post("/", middleware, async (req, res) => {
     }
 })
 
+roomRouter.get("/:slug", async (req, res) => {
+    const slug = req.params.slug;
+
+    const room = await prismaClient.room.findFirst({
+        where: {
+            slug
+        }
+    })
+
+    if (room) {
+        res.json({
+            room
+        })
+    }
+})
+
 export {
     roomRouter
 }
