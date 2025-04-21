@@ -34,7 +34,7 @@ export default function Home() {
       >
         <input
           type="text"
-          placeholder='Room Id'
+          placeholder='Enter room name ...'
           onChange={(e) => {
             setRoomId(e.target.value)
           }}

@@ -10,22 +10,25 @@ export function ChatRoomClient({
     messages: { message: string }[];
     id: string
 }) {
-    const [chats, setChats] = useState(messages)
+    const [chats, setChats] = useState<{ message: string }[]>(messages)
     const { socket, loading } = useSocket();
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
+        // Socket is exists and loading is not happening then we will start listening to the mesages
         if (socket && !loading) {
 
+            // first join the room 
             socket.send(JSON.stringify({
-                type: "join_room",
+                type: "join-room",
                 roomId: id,
             }))
 
+            // then listen to the messages
             socket.onmessage = (event) => {
                 const parsedData = JSON.parse(event.data as string);
                 if (parsedData.type === 'chat') {
-                    setChats(c => [...c, parsedData.message])
+                    setChats(c => [...c, { message: parsedData.message }])
                 }
             }
         }
@@ -43,15 +46,22 @@ export function ChatRoomClient({
             }
         }
     >
-        {messages.map((m, index) => <div key={index}>
+        {chats.map((m, index) => <div key={index}>
             {m.message}
         </div>
         )}
         <div
         >
             <input
+                placeholder='Enter message ...'
                 ref={inputRef}
                 type="text"
+                style={{
+                    padding: '10px',
+                    borderRadius: '5px',
+                    border: '1px solid #ccc',
+                    width: '200px'
+                }}
             ></input>
             <button
                 onClick={() => {

@@ -1,9 +1,10 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../config";
+import { ChatRoom } from "../../../components";
 
 async function getRoomId(slug: string) {
     const response = await axios.get(`${BACKEND_URL}/room/${slug}`)
-    return response.data.id;
+    return response.data.room.id;
 }
 
 export default async function chatRoom({ params }: {
@@ -11,25 +12,26 @@ export default async function chatRoom({ params }: {
         slug: string
     }
 }) {
-    const slug = params.slug;
-    const roomId = await getRoomId(slug);
-
-
+    const { slug } = await params;
+    const id = await getRoomId(slug);
     return (
         <div
             style={
                 {
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
+                    height: '80vh',
                     alignItems: 'center',
-                    height: '100vh',
-                    gap: '20px'
+                    gap: '8px',
+
                 }
             }
         >
-            <h1>Welcome to the Chat Room</h1>
-            <h2>Room ID: {params.slug}</h2>
+
+            <ChatRoom
+                id={id}
+            />
         </div>
     )
 }

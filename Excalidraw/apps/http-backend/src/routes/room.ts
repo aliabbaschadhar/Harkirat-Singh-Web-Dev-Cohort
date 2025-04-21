@@ -77,6 +77,10 @@ roomRouter.get("/:slug", async (req, res) => {
         res.json({
             room
         })
+    } else {
+        res.json({
+            msg: "Room not found"
+        })
     }
 })
 
