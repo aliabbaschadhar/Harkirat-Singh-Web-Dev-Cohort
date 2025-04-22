@@ -15,7 +15,7 @@ export default function Canvas() {
 
             if (!ctx) return;
 
-            ctx.strokeRect(25, 25, 100, 100);
+            // ctx.strokeRect(25, 25, 100, 100);
             let clicked = false;
             let startX = 0;
             let startY = 0;
@@ -38,7 +38,10 @@ export default function Canvas() {
                 if (clicked) {
                     const width = e.clientX - startX;
                     const height = e.clientY - startY;
-                    ctx.clearRect(0, 0, canvas.width, canvas.height)
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = "rgba(0,0,0)"
+                    ctx.fillRect(0, 0, canvas.width, canvas.height)
+                    ctx.strokeStyle = "rgba(255,255,255)"
                     ctx.strokeRect(startX, startY, width, height)
                 }
             })
@@ -47,11 +50,11 @@ export default function Canvas() {
     return (
         <div >
             <canvas
-                className="bg-amber-800"
+                // className="bg-amber-800"
                 ref={canvasRef}
-                width={500}
-                height={500}
+                width={window.innerWidth}
+                height={window.innerHeight}
             ></canvas>
-        </div>
+        </div >
     )
 }
