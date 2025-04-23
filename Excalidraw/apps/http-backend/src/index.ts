@@ -11,6 +11,6 @@ dotenv.config();
 
 app.use("/api/v1", rootRouter);
 
-app.listen(3001, () => {
+app.listen(3500, () => {
     console.log("Server is listening on 3001")
 }) 

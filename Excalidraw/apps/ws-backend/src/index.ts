@@ -65,7 +65,15 @@ wss.on("connection", (ws, request) => {
     })
 
     ws.on("message", async (data) => {
-        const parsedData = JSON.parse(data as unknown as string) // Convert the string into JSON object
+
+        let parsedData;
+
+        if (typeof data !== "string") {
+            parsedData = JSON.parse(data.toString());
+        } else {
+            parsedData = JSON.parse(data);
+        }
+        // const parsedData = JSON.parse(data as unknown as string) // Convert the string into JSON object
         // {type: "join-room",roomId:1}
         if (parsedData.type === "join-room") {
             const user = users.find(x => x.ws === ws);
@@ -86,13 +94,14 @@ wss.on("connection", (ws, request) => {
 
         } else if (parsedData.type === "chat") {
 
-            const roomId = parsedData.roomId;
+            const roomIdStr = parsedData.roomId; // Keep string version
+            const roomId = Number(roomIdStr); // Convert to number for Prisma
             const message = parsedData.message;
 
             await prismaClient.chat.create({
                 data: {
-                    roomId,
-                    message,
+                    roomId, // Using the number version
+                    message: message,
                     userId
                 }
             }) // That is the worst approach everytime the chat message will take more time to be broadcasted to participents
@@ -101,7 +110,7 @@ wss.on("connection", (ws, request) => {
             // todo: Use queues here
 
             users.forEach((user) => {
-                if (user.rooms.includes(roomId)) {
+                if (user.rooms.includes(roomIdStr)) { // Use string version for comparison
 
                     user.ws.send(JSON.stringify({
                         // JSON.stringify because the websocket servers can only send strings and binary data
