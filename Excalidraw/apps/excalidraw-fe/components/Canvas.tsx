@@ -1,12 +1,13 @@
 "use client";
 
-import { initDraw } from "@/draw";
+// import { initDraw } from "@/draw";
 import { useEffect, useRef, useState } from "react";
 import { IconButton } from "./";
 // import { useWindowSize } from "@uidotdev/usehooks";
 import { Circle, Pencil, PentagonIcon, RectangleHorizontal, TextCursor } from "lucide-react";
+import { Game } from "@/draw/Game";
 
-enum Tool {
+export enum Tool {
     Pencil = "pencil",
     Rectangle = "rectangle",
     Circle = "circle",
@@ -29,7 +30,8 @@ export function Canvas({ roomId, socket }: {
 
     // const { width, height } = useWindowSize(); // measure only the viewport size not the actual available size when the chrome dev tools are open
 
-    const [selectedTool, setSelectedTool] = useState<Tool>(Tool.Pencil);
+    const [selectedTool, setSelectedTool] = useState<Tool>(Tool.Rectangle);
+    const [game, setGame] = useState<Game>();
 
 
 
@@ -50,17 +52,25 @@ export function Canvas({ roomId, socket }: {
     }, [])
 
 
+
+    useEffect(() => {
+        game?.setTool(selectedTool)
+    }, [selectedTool, game])
+
     useEffect(() => {
         // setSize({ height: window.innerHeight, width: window.innerWidth });
+        // if (canvasRef.current) {
+        //     initDraw(canvasRef.current, roomId, socket) // Pass the socket to the initDraw function bcz we need to send the data to the server 
+        // }
+
         if (canvasRef.current) {
-            initDraw(canvasRef.current, roomId, socket) // Pass the socket to the initDraw function bcz we need to send the data to the server 
+            const g = new Game(canvasRef.current, roomId, socket);
+            setGame(g);
+
+            return () => g.destroy();
         }
     }, [canvasRef, roomId, socket]);
 
-    useEffect(() => {
-        // @ts-ignore
-        window.selectedTool = selectedTool;
-    }, [selectedTool])
 
     return (
         <div>
